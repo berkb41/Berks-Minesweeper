@@ -1,24 +1,25 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Board {
 
-    public static Byte[][] gameBoard;
-    private final List<Cell> mineCells;
+    public static int[][] gameBoard;
+    private final HashSet<Cell> mineCells;
     private final List<Cell> checkedCells;
-    private final byte size;
+    private final int size;
 
 
-    public Board(final byte size) {
+    public Board(final int size) {
         this.size = size;
-        gameBoard = new Byte[size][size];
-        mineCells = new ArrayList<>();
+        gameBoard = new int[size][size];
+        mineCells = new HashSet<>();
         checkedCells = new ArrayList<>();
     }
 
-    public List<Cell> getMineCells() {
+    public HashSet<Cell> getMineCells() {
         return  mineCells;
     }
 
@@ -30,7 +31,7 @@ public class Board {
         checkedCells.add(checkedCell);
     }
 
-    public byte getSizeOfTheBoard() {
+    public int getSizeOfTheBoard() {
         return size;
     }
 
