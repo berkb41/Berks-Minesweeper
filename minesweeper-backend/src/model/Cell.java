@@ -10,7 +10,7 @@ final public class Cell {
     public Cell(final Coordinate coordinate) {
         this.coordinate = coordinate;
         this.adjacentMineCount = 0;
-        this.cellType = CellType.ADJACENT_0;
+        this.cellType = CellType.UNCHECKED;
         this.isChecked = false;
         this.isMine = false;
     }
