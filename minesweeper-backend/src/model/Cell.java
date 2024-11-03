@@ -1,24 +1,22 @@
 package model;
 
 final public class Cell {
-    final private int x_Axis;
-    final private int y_Axis;
+    final Coordinate coordinate;
     private CellType cellType;
     private int adjacentMineCount;
+    private boolean isChecked;
+    private boolean isMine;
 
-    public Cell(int x_Axis, int y_Axis, CellType cellType) {
-        this.x_Axis = x_Axis;
-        this.y_Axis = y_Axis;
+    public Cell(final Coordinate coordinate) {
+        this.coordinate = coordinate;
         this.adjacentMineCount = 0;
-        this.cellType = cellType;
+        this.cellType = CellType.ADJACENT_0;
+        this.isChecked = false;
+        this.isMine = false;
     }
 
-    public int getX_Axis() {
-        return x_Axis;
-    }
-
-    public int getY_Axis() {
-        return y_Axis;
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
     public CellType getCellType() {
@@ -35,6 +33,18 @@ final public class Cell {
 
     public void increaseAdjacentMineCount() {
         adjacentMineCount+=1;
+    }
+
+    public void changeToMineCell() {
+        isMine = true;
+    }
+
+    public void updateCellType() {
+        //TODO
+    }
+
+    public void checkCell() {
+        isChecked = true;
     }
 
 }

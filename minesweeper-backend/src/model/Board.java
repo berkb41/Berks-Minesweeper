@@ -35,4 +35,13 @@ public class Board {
         return size;
     }
 
+    //TODO
+    public boolean isMineCell(int x_Axis, int y_Axis) {
+        return false;
+    }
+
+    public void insertNewMineCell(Cell newCell) {
+        mineCells.add(newCell);
+    }
+
 }
