@@ -19,6 +19,8 @@ public class Coordinate {
         return y_Axis;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
