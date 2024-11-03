@@ -14,6 +14,9 @@ public class GamePlay {
         isGameGoing = false;
     }
 
+    public boolean isGameGoing() {
+        return isGameGoing;
+    }
 
     public void startGame() {
         isGameGoing = true;
@@ -27,9 +30,6 @@ public class GamePlay {
     public void makeMove(final int x_Axis, final int y_Axis) {
         Board.cellCheckingStatusBoard[x_Axis][y_Axis] = true;
         checkGameStatus(x_Axis, y_Axis);
-        if(!isGameGoing) {
-
-        }
     }
 
     private void checkGameStatus(final int x_Axis, final int y_Axis) {
