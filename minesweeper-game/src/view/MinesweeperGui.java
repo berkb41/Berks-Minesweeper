@@ -20,11 +20,10 @@ public class MinesweeperGui implements ActionListener {
     private String selectedMode;
 
     public MinesweeperGui() {
-        createAndShowGUI();
         selectedMode = "N/A";
     }
 
-    private void createAndShowGUI() {
+    public void createAndShowGUI() {
         JFrame frame = new JFrame("Berk's Minesweeper");
 
         // Add a title in the beginning section

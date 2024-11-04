@@ -8,6 +8,7 @@ public class Minesweeper
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 MinesweeperGui minesweeperGui = new MinesweeperGui();
+                minesweeperGui.createAndShowGUI();
             }
         });
     }
