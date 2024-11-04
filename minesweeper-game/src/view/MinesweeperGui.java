@@ -12,10 +12,20 @@ public class MinesweeperGui implements ActionListener {
 
     // Level buttons
     private JButton beginner, medium, expert;
-    private JButton quit, retry;
+    // Control buttons
+    private JButton quit, newGame;
+    // Game board
     private JButton[][] gameButtons;
+    // Cell size since layout differs due to number of buttons
     private int cellSize;
+
+    // Game panels
+    private JPanel mainPane;
     private JPanel gamePane;
+    private JPanel levelSelectionPane;
+
+    // Main frame
+    private JFrame frame;
 
     // Game logic
     private GamePlay gamePlay;
@@ -26,7 +36,8 @@ public class MinesweeperGui implements ActionListener {
     }
 
     public void createAndShowGUI() {
-        JFrame frame = new JFrame("Berk's Minesweeper");
+        frame = new JFrame("Berk's Minesweeper");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Add a title in the beginning section
         JLabel title = new JLabel("Select Game Level", SwingConstants.CENTER);
@@ -37,60 +48,62 @@ public class MinesweeperGui implements ActionListener {
         title.setBackground(Color.decode("#FF6200"));
         frame.getContentPane().add(title, BorderLayout.PAGE_START);
 
-        // Add a flow pane in the main center section
-        JPanel mainPane = new JPanel(new FlowLayout());
+        // Main pane with BorderLayout
+        mainPane = new JPanel(new BorderLayout());
         mainPane.setPreferredSize(new Dimension(900, 900));
         mainPane.setBackground(Color.LIGHT_GRAY);
         mainPane.setOpaque(true);
         frame.getContentPane().add(mainPane, BorderLayout.CENTER);
+
+        // Level selection panel
+        levelSelectionPane = new JPanel(new FlowLayout());
+        levelSelectionPane.setOpaque(false);
 
         // Add two buttons to our pane
         beginner = new JButton("Beginner");
         medium = new JButton("Medium");
         expert = new JButton("Expert");
 
-        // Adjust the size and color of the beginner button
-        beginner.setPreferredSize(new Dimension(200, 30));
-        beginner.setBackground(Color.ORANGE);
+        // Level selection buttons optimized
+        Dimension buttonSize = new Dimension(200, 30);
+        Color buttonColor = Color.ORANGE;
 
-        // Adjust the size and color of the medium button
-        medium.setPreferredSize(new Dimension(200, 30));
-        medium.setBackground(Color.ORANGE);
-
-        // Adjust the size and color of the expert button
-        expert.setPreferredSize(new Dimension(200, 30));
-        expert.setBackground(Color.ORANGE);
+        beginner.setPreferredSize(buttonSize);
+        beginner.setBackground(buttonColor);
+        medium.setPreferredSize(buttonSize);
+        medium.setBackground(buttonColor);
+        expert.setPreferredSize(buttonSize);
+        expert.setBackground(buttonColor);
 
         // Add the button listeners
         beginner.addActionListener(this);
         medium.addActionListener(this);
         expert.addActionListener(this);
 
-        // Adding buttons to the pane
-        mainPane.add(beginner);
-        mainPane.add(medium);
-        mainPane.add(expert);
+        // Add level selection buttons to levelSelectionPane
+        levelSelectionPane.add(beginner);
+        levelSelectionPane.add(medium);
+        levelSelectionPane.add(expert);
 
-        // Quit button
+        // Add levelSelectionPane to mainPane
+        mainPane.add(levelSelectionPane, BorderLayout.CENTER);
+
+        // Initialize quit and retry buttons
         quit = new JButton("Quit");
-        quit.setPreferredSize(new Dimension(300, 30));
+        quit.setPreferredSize(new Dimension(100, 30));
         quit.setBackground(Color.ORANGE);
         quit.addActionListener(this);
 
-        // Retry button
-        retry = new JButton("Retry");
-        retry.setPreferredSize(new Dimension(300, 30));
-        retry.setBackground(Color.ORANGE);
-        retry.addActionListener(this);
+        newGame = new JButton("New Game");
+        newGame.setPreferredSize(new Dimension(100, 30));
+        newGame.setBackground(Color.ORANGE);
+        newGame.addActionListener(this);
 
+        // Create gamePane
         gamePane = new JPanel();
         gamePane.setOpaque(false);
         gamePane.setVisible(false);
 
-
-        gamePane.add(quit);
-        gamePane.add(retry);
-        mainPane.add(gamePane);
 
         // Show the Frame
         frame.pack();
@@ -102,25 +115,52 @@ public class MinesweeperGui implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
 
+        Object source = e.getSource();
+
         // Check if the beginner mode selected
-        if (e.getSource() == beginner) {
+        if (source == beginner) {
             selectedMode = "beginner";
             initializeGamePlay();
         }
         // Check if the medium mode selected
-        else if (e.getSource() == medium) {
+        else if (source == medium) {
             selectedMode = "medium";
             initializeGamePlay();
         }
         // Check if the expert mode selected
-        else if (e.getSource() == expert) {
+        else if (source == expert) {
             selectedMode = "expert";
             initializeGamePlay();
+        }
+        // Check if quit button clicked
+        else if (source == quit) {
+            System.exit(0);
+        }
+        // check if new game requested
+        else if (source == newGame) {
+            // Restart the game with the same settings
+            initializeGamePlay();
+        }
+        // Handle board clicks based on CELL:X:Y convention
+        else if (e.getActionCommand() != null && e.getActionCommand().startsWith("CELL:")) {
+            String[] parts = e.getActionCommand().split(":");
+            int i = Integer.parseInt(parts[1]);
+            int j = Integer.parseInt(parts[2]);
+            handleBoardClick(i, j);
         }
 
     }
 
+    private void handleBoardClick(int x, int y) {
+        //TODO
+    }
+
     private void initializeGamePlay() {
+
+        // We will remove every component exist and re-draw
+        mainPane.remove(levelSelectionPane);
+        mainPane.remove(gamePane);
+
         switch(selectedMode) {
             case "medium": // Medium level 16*16
                 gamePlay = new GamePlay(GameConstant.MEDIUM_BOARD_SIZE, GameConstant.MEDIUM_MINE_COUNT);
@@ -134,20 +174,22 @@ public class MinesweeperGui implements ActionListener {
                 gamePlay = new GamePlay(GameConstant.BEGINNER_BOARD_SIZE, GameConstant.BEGINNER_MINE_COUNT);
                 cellSize = GameConstant.BEGINNER_CELL_SIZE;
         }
-        hideLevelButtons();
-        showGameButtons();
-        drawGameBoard();
-    }
 
-    private void hideLevelButtons() {
-        beginner.setVisible(false);
-        medium.setVisible(false);
-        expert.setVisible(false);
-    }
-
-    private void showGameButtons() {
+        // Game panel added to application as game will be starting
+        mainPane.add(gamePane, BorderLayout.CENTER);
         gamePane.setVisible(true);
+
+        // Draw the game board
+        drawGameBoard();
+
+        // Refresh board
+        mainPane.revalidate();
+        mainPane.repaint();
+        frame.pack();
+        frame.revalidate();
+        frame.repaint();
     }
+
 
     private void drawGameBoard() {
         int boardSize = gamePlay.getBoardSize();
@@ -157,27 +199,50 @@ public class MinesweeperGui implements ActionListener {
 
         // Remove any existing components from gamePane
         gamePane.removeAll();
-        gamePane.setLayout(new GridLayout(boardSize, boardSize));
+        gamePane.setLayout(new BorderLayout());
+
+        // Create the control panel for Quit and Retry buttons
+        JPanel controlPanel = new JPanel();
+        controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        controlPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
+
+        // Adjust the size and color of the quit and retry buttons
+        quit.setPreferredSize(new Dimension(300, 30));
+        quit.setBackground(Color.ORANGE);
+        newGame.setPreferredSize(new Dimension(300, 30));
+        newGame.setBackground(Color.ORANGE);
+
+        // Add buttons to controlPanel
+        controlPanel.add(quit);
+        controlPanel.add(newGame);
+
+        // Add control panel to the top of gamePane
+        gamePane.add(controlPanel, BorderLayout.NORTH);
+
+        // Create the panel for the game buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(boardSize, boardSize));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
+
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 JButton button = new JButton();
                 button.setPreferredSize(new Dimension(cellSize, cellSize)); // Adjust size as needed
-
-                // Store the button in the array
                 gameButtons[i][j] = button;
 
-                // Add action listener to handle clicks
+                // Action listener that will parse coordinate
                 button.addActionListener(this);
 
-                // Use the button's action command to store its coordinates
+                // Action command with convention of CELL:X:Y
                 button.setActionCommand("CELL:" + i + ":" + j);
 
-                // Add the button to the gamePane
-                gamePane.add(button);
+                // Add the button to the buttonPanel
+                buttonPanel.add(button);
             }
         }
 
-        // Refresh the gamePane to display the new buttons
+        gamePane.add(buttonPanel, BorderLayout.CENTER);
+
         gamePane.revalidate();
         gamePane.repaint();
     }
