@@ -12,8 +12,8 @@ public class MinesweeperGui implements ActionListener {
 
     // Level buttons
     private JButton beginner, medium, expert;
-    private JButton quit;
-    private JPanel gamePanel = new JPanel();
+    private JButton quit, retry;
+    private JPanel gamePane = new JPanel();
 
     // Game logic
     private GamePlay gamePlay;
@@ -37,11 +37,11 @@ public class MinesweeperGui implements ActionListener {
         frame.getContentPane().add(title, BorderLayout.PAGE_START);
 
         // Add a flow pane in the main center section
-        JPanel settingsPane = new JPanel(new FlowLayout());
-        settingsPane.setPreferredSize(new Dimension(900, 900));
-        settingsPane.setBackground(Color.LIGHT_GRAY);
-        settingsPane.setOpaque(true);
-        frame.getContentPane().add(settingsPane, BorderLayout.CENTER);
+        JPanel mainPane = new JPanel(new FlowLayout());
+        mainPane.setPreferredSize(new Dimension(900, 900));
+        mainPane.setBackground(Color.LIGHT_GRAY);
+        mainPane.setOpaque(true);
+        frame.getContentPane().add(mainPane, BorderLayout.CENTER);
 
         // Add two buttons to our pane
         beginner = new JButton("Beginner");
@@ -66,15 +66,30 @@ public class MinesweeperGui implements ActionListener {
         expert.addActionListener(this);
 
         // Adding buttons to the pane
-        settingsPane.add(beginner);
-        settingsPane.add(medium);
-        settingsPane.add(expert);
+        mainPane.add(beginner);
+        mainPane.add(medium);
+        mainPane.add(expert);
 
-        //
+        // Quit button
         quit = new JButton("Quit");
         quit.setPreferredSize(new Dimension(300, 30));
         quit.setBackground(Color.ORANGE);
         quit.addActionListener(this);
+
+        // Retry button
+        retry = new JButton("Retry");
+        retry.setPreferredSize(new Dimension(300, 30));
+        retry.setBackground(Color.ORANGE);
+        retry.addActionListener(this);
+
+        gamePane = new JPanel();
+        gamePane.setOpaque(false);
+        gamePane.setVisible(false);
+
+
+        gamePane.add(quit);
+        gamePane.add(retry);
+        mainPane.add(gamePane);
 
 
 
@@ -117,6 +132,9 @@ public class MinesweeperGui implements ActionListener {
             default:
                 gamePlay = new GamePlay(GameConstant.BEGINNER_BOARD_SIZE, GameConstant.BEGINNER_MINE_COUNT);
         }
+        hideLevelButtons();
+        showGameButtons();
+        drawGameBoard();
     }
 
     private void hideLevelButtons() {
@@ -125,9 +143,12 @@ public class MinesweeperGui implements ActionListener {
         expert.setVisible(false);
     }
 
-    private void showQuitButton() {
-
+    private void showGameButtons() {
+        gamePane.setVisible(true);
     }
 
+    private void drawGameBoard() {
+
+    }
 
 }
