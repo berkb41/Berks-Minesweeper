@@ -13,10 +13,12 @@ public class GamePlayUtil {
         HashSet<Coordinate> mineCoordinates = new HashSet<>();
 
         do {
+
             int x_Axis = rand.nextInt(size);
             int y_Axis = rand.nextInt(size);
             Coordinate newCoordinate = new Coordinate(x_Axis,y_Axis);
             mineCoordinates.add(newCoordinate);
+
         } while(mineCoordinates.size() < mineCount);
 
         return mineCoordinates;
