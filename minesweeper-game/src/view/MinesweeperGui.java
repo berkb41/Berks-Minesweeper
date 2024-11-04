@@ -13,7 +13,9 @@ public class MinesweeperGui implements ActionListener {
     // Level buttons
     private JButton beginner, medium, expert;
     private JButton quit, retry;
-    private JPanel gamePane = new JPanel();
+    private JButton[][] gameButtons;
+    private int cellSize;
+    private JPanel gamePane;
 
     // Game logic
     private GamePlay gamePlay;
@@ -90,8 +92,6 @@ public class MinesweeperGui implements ActionListener {
         gamePane.add(retry);
         mainPane.add(gamePane);
 
-
-
         // Show the Frame
         frame.pack();
         frame.setVisible(true);
@@ -124,12 +124,15 @@ public class MinesweeperGui implements ActionListener {
         switch(selectedMode) {
             case "medium": // Medium level 16*16
                 gamePlay = new GamePlay(GameConstant.MEDIUM_BOARD_SIZE, GameConstant.MEDIUM_MINE_COUNT);
+                cellSize = GameConstant.MEDIUM_CELL_SIZE;
                 break;
             case "expert": // Expert level 30*30
                 gamePlay = new GamePlay(GameConstant.EXPERT_BOARD_SIZE, GameConstant.EXPERT_MINE_COUNT);
+                cellSize = GameConstant.EXPERT_CELL_SIZE;
                 break;
             default: // This is for beginner but set as default to be able to start game in parameter error (9*9)
                 gamePlay = new GamePlay(GameConstant.BEGINNER_BOARD_SIZE, GameConstant.BEGINNER_MINE_COUNT);
+                cellSize = GameConstant.BEGINNER_CELL_SIZE;
         }
         hideLevelButtons();
         showGameButtons();
@@ -147,7 +150,36 @@ public class MinesweeperGui implements ActionListener {
     }
 
     private void drawGameBoard() {
+        int boardSize = gamePlay.getBoardSize();
 
+        // Initialize the gameButtons array
+        gameButtons = new JButton[boardSize][boardSize];
+
+        // Remove any existing components from gamePane
+        gamePane.removeAll();
+        gamePane.setLayout(new GridLayout(boardSize, boardSize));
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                JButton button = new JButton();
+                button.setPreferredSize(new Dimension(cellSize, cellSize)); // Adjust size as needed
+
+                // Store the button in the array
+                gameButtons[i][j] = button;
+
+                // Add action listener to handle clicks
+                button.addActionListener(this);
+
+                // Use the button's action command to store its coordinates
+                button.setActionCommand("CELL:" + i + ":" + j);
+
+                // Add the button to the gamePane
+                gamePane.add(button);
+            }
+        }
+
+        // Refresh the gamePane to display the new buttons
+        gamePane.revalidate();
+        gamePane.repaint();
     }
 
 }

@@ -6,9 +6,11 @@ public class GamePlay {
 
     final private Board gameBoard;
     private int gameCount;
+    private int size;
     private boolean isGameGoing;
 
     public GamePlay(final int selectedSize, final int mineCount) {
+        size = selectedSize;
         this.gameBoard = new Board(selectedSize, GamePlayUtil.createMineCoordinates(mineCount,selectedSize));
         gameCount = 0;
         isGameGoing = false;
@@ -16,6 +18,10 @@ public class GamePlay {
 
     public boolean isGameGoing() {
         return isGameGoing;
+    }
+
+    public int getBoardSize() {
+        return size;
     }
 
     public void startGame() {
