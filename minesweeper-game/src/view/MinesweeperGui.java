@@ -151,8 +151,26 @@ public class MinesweeperGui implements ActionListener {
 
     }
 
-    private void handleBoardClick(int x, int y) {
-        //TODO
+    private void handleBoardClick(int x_Axis, int y_Axis) {
+        // If the cell is mine the integer value is -1 if anything else will be either just open it or put number of adjacent mines
+        int boardValue = gamePlay.getCellValue(x_Axis,y_Axis);
+
+        if (boardValue < 0) {
+
+            gameButtons[x_Axis][y_Axis].setText("M");
+            gameButtons[x_Axis][y_Axis].setBackground(Color.red);
+            gameButtons[x_Axis][y_Axis].setEnabled(false);
+
+        } else if (boardValue == 0) {
+
+            gameButtons[x_Axis][y_Axis].setEnabled(false);
+
+        } else {
+
+            gameButtons[x_Axis][y_Axis].setText(String.valueOf(boardValue));
+            gameButtons[x_Axis][y_Axis].setEnabled(false);
+
+        }
     }
 
     private void initializeGamePlay() {
@@ -197,26 +215,26 @@ public class MinesweeperGui implements ActionListener {
         // Initialize the gameButtons array
         gameButtons = new JButton[boardSize][boardSize];
 
-        // Remove any existing components from gamePane
+        // Remove any existing components from game panel
         gamePane.removeAll();
         gamePane.setLayout(new BorderLayout());
 
-        // Create the control panel for Quit and Retry buttons
+        // Create the control panel for Quit and new game buttons
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         controlPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
 
-        // Adjust the size and color of the quit and retry buttons
+        // Adjust the size and color of the quit and new game buttons
         quit.setPreferredSize(new Dimension(300, 30));
         quit.setBackground(Color.ORANGE);
         newGame.setPreferredSize(new Dimension(300, 30));
         newGame.setBackground(Color.ORANGE);
 
-        // Add buttons to controlPanel
+        // Add buttons to control panel
         controlPanel.add(quit);
         controlPanel.add(newGame);
 
-        // Add control panel to the top of gamePane
+        // Add control panel to the top of game panel
         gamePane.add(controlPanel, BorderLayout.NORTH);
 
         // Create the panel for the game buttons

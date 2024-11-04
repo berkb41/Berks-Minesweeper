@@ -46,6 +46,10 @@ public class GamePlay {
         isGameGoing = Board.gameBoard[x_Axis][y_Axis] != -1;
     }
 
+    public int getCellValue(int x_Axis, int y_Axis) {
+        return Board.gameBoard[x_Axis][y_Axis];
+    }
+
 
 
 }
