@@ -18,6 +18,7 @@ public class MinesweeperGui implements ActionListener {
     private JButton[][] gameButtons;
     // Cell size since layout differs due to number of buttons
     private int cellSize;
+    private JLabel roundCounter;
 
     // Game panels
     private JPanel mainPane;
@@ -138,7 +139,9 @@ public class MinesweeperGui implements ActionListener {
         // check if new game requested
         else if (source == newGame) {
             // Restart the game with the same settings
-            initializeGamePlay();
+            gamePlay.increaseRoundCount();
+            gamePlay.resetMoveCount();
+            resetGameBoard();
         }
         // Handle board clicks based on CELL:X:Y convention
         else if (e.getActionCommand() != null && e.getActionCommand().startsWith("CELL:")) {
@@ -151,14 +154,30 @@ public class MinesweeperGui implements ActionListener {
     }
 
     private void handleBoardClick(int x_Axis, int y_Axis) {
+
+        // Increasing move count to determine in case of game won
+        gamePlay.increaseMoveCount();
+
+
+        // Check whether game is going on
+        if (!gamePlay.isGameGoing()) {
+            return;
+        }
+
+
         // If the cell is mine the integer value is -1 if anything else will be either just open it or put number of adjacent mines
         int boardValue = gamePlay.getCellValue(x_Axis,y_Axis);
 
         if (boardValue < 0) {
 
             gameButtons[x_Axis][y_Axis].setText("M");
-            gameButtons[x_Axis][y_Axis].setBackground(Color.red);
+            gameButtons[x_Axis][y_Axis].setBackground(Color.ORANGE);
             gameButtons[x_Axis][y_Axis].setEnabled(false);
+
+            //Show mines but preserve location
+            makeMinesVisible();
+
+            JOptionPane.showMessageDialog(frame, "Game Over! You can start new game by clicking new game button.");
 
         } else if (boardValue == 0) {
 
@@ -169,6 +188,10 @@ public class MinesweeperGui implements ActionListener {
             gameButtons[x_Axis][y_Axis].setText(String.valueOf(boardValue));
             gameButtons[x_Axis][y_Axis].setEnabled(false);
 
+        }
+
+        if (gamePlay.isGameWon()) {
+            JOptionPane.showMessageDialog(frame, "Congratulations! You've won! You can start new game by clicking the button");
         }
     }
 
@@ -211,6 +234,7 @@ public class MinesweeperGui implements ActionListener {
 
 
     private void drawGameBoard() {
+        gamePlay.increaseRoundCount();
         int boardSize = gamePlay.getBoardSize();
 
         // Initialize the gameButtons array
@@ -231,8 +255,12 @@ public class MinesweeperGui implements ActionListener {
         newGame.setPreferredSize(new Dimension(300, 30));
         newGame.setBackground(Color.ORANGE);
 
+        roundCounter = new JLabel();
+        updateGameRoundLabel();
+
         // Add buttons to control panel
         controlPanel.add(quit);
+        controlPanel.add(roundCounter);
         controlPanel.add(newGame);
 
         // Add control panel to the top of game panel
@@ -264,6 +292,33 @@ public class MinesweeperGui implements ActionListener {
 
         gamePane.revalidate();
         gamePane.repaint();
+    }
+
+    private void makeMinesVisible() {
+        int size = gamePlay.getBoardSize();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (gamePlay.getCellValue(i, j) == -1) {
+                    gameButtons[i][j].setText("M");
+                    gameButtons[i][j].setBackground(Color.ORANGE);
+                }
+            }
+        }
+    }
+
+    private void resetGameBoard() {
+        updateGameRoundLabel();
+        for (int i = 0; i < gamePlay.getBoardSize(); i++) {
+            for (int j = 0; j < gamePlay.getBoardSize(); j++) {
+                gameButtons[i][j].setText("");
+                gameButtons[i][j].setEnabled(true);
+                gameButtons[i][j].setBackground(null);
+            }
+        }
+    }
+
+    private void updateGameRoundLabel() {
+        roundCounter.setText("Round: " + gamePlay.getRoundCount());
     }
 
 }
