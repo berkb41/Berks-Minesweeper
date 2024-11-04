@@ -173,6 +173,7 @@ public class MinesweeperGui implements ActionListener {
             gameButtons[x_Axis][y_Axis].setText("M");
             gameButtons[x_Axis][y_Axis].setBackground(Color.ORANGE);
             gameButtons[x_Axis][y_Axis].setEnabled(false);
+            gamePlay.changeGameStatus();
 
             //Show mines but preserve location
             makeMinesVisible();
@@ -191,6 +192,7 @@ public class MinesweeperGui implements ActionListener {
         }
 
         if (gamePlay.isGameWon()) {
+            gamePlay.changeGameStatus();
             JOptionPane.showMessageDialog(frame, "Congratulations! You've won! You can start new game by clicking the button");
         }
     }

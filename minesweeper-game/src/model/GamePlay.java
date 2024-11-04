@@ -29,7 +29,7 @@ public class GamePlay {
     }
 
     public void startGame() {
-        isGameGoing = true;
+        changeGameStatus();
         gameBoard.initializeBoard();
     }
 
@@ -55,6 +55,10 @@ public class GamePlay {
 
     public int getRoundCount() {
         return gameCount;
+    }
+
+    public void changeGameStatus() {
+        isGameGoing = !isGameGoing;
     }
 
     public int getCellValue(int x_Axis, int y_Axis) {
