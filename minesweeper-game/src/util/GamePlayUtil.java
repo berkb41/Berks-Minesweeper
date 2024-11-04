@@ -25,19 +25,21 @@ public class GamePlayUtil {
     public static int getAdjacentCount(Coordinate givenCell, int selectedSize) {
 
         int count = 0;
-        Coordinate testCoordinate = new Coordinate(-1,-1);
 
-        // If there is no cell on the left or / and right
-        int minControlXAxis = givenCell.getX_Axis() > 0 ? (givenCell.getX_Axis()-1) : 0;
-        int maxControlXAxis = givenCell.getX_Axis() < (selectedSize-1) ? (givenCell.getX_Axis() + 1) : (selectedSize-1);
+        int x = givenCell.getX_Axis();
+        int y = givenCell.getY_Axis();
 
-        // If there is no cell on the up or / and down
-        int minControlYAxis = givenCell.getY_Axis() > 0 ? (givenCell.getY_Axis()-1) : 0;
-        int maxControlYAxis = givenCell.getY_Axis() < (selectedSize-1) ? (givenCell.getY_Axis() + 1) : (selectedSize-1);
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                // Skip the cell itself
+                if (i == x && j == y) { continue; }
 
-        for(int i = minControlXAxis; i <= maxControlXAxis; i++) {
-            for(int j = minControlYAxis; j < maxControlYAxis; j++) {
-                count = Board.gameBoard[i][j] == -1 ? (count + 1) : count;
+                // Check if indices are within bounds
+                if (i >= 0 && i < selectedSize && j >= 0 && j < selectedSize) {
+                    if (Board.gameBoard[i][j] == -1) {
+                        count++;
+                    }
+                }
             }
         }
 

@@ -122,13 +122,13 @@ public class MinesweeperGui implements ActionListener {
 
     private void initializeGamePlay() {
         switch(selectedMode) {
-            case "medium":
+            case "medium": // Medium level 16*16
                 gamePlay = new GamePlay(GameConstant.MEDIUM_BOARD_SIZE, GameConstant.MEDIUM_MINE_COUNT);
                 break;
-            case "expert":
+            case "expert": // Expert level 30*30
                 gamePlay = new GamePlay(GameConstant.EXPERT_BOARD_SIZE, GameConstant.EXPERT_MINE_COUNT);
                 break;
-            default:
+            default: // This is for beginner but set as default to be able to start game in parameter error (9*9)
                 gamePlay = new GamePlay(GameConstant.BEGINNER_BOARD_SIZE, GameConstant.BEGINNER_MINE_COUNT);
         }
         hideLevelButtons();
