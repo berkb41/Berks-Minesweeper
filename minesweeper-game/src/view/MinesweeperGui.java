@@ -75,7 +75,7 @@ public class MinesweeperGui implements ActionListener {
         expert.setPreferredSize(buttonSize);
         expert.setBackground(buttonColor);
 
-        // Add the button listeners
+        // Add the button event handlers
         beginner.addActionListener(this);
         medium.addActionListener(this);
         expert.addActionListener(this);
@@ -85,10 +85,9 @@ public class MinesweeperGui implements ActionListener {
         levelSelectionPane.add(medium);
         levelSelectionPane.add(expert);
 
-        // Add levelSelectionPane to mainPane
         mainPane.add(levelSelectionPane, BorderLayout.CENTER);
 
-        // Initialize quit and retry buttons
+        // Initialize quit and new game buttons
         quit = new JButton("Quit");
         quit.setPreferredSize(new Dimension(100, 30));
         quit.setBackground(Color.ORANGE);
@@ -192,6 +191,8 @@ public class MinesweeperGui implements ActionListener {
                 gamePlay = new GamePlay(GameConstant.BEGINNER_BOARD_SIZE, GameConstant.BEGINNER_MINE_COUNT);
                 cellSize = GameConstant.BEGINNER_CELL_SIZE;
         }
+
+        gamePlay.startGame();
 
         // Game panel added to application as game will be starting
         mainPane.add(gamePane, BorderLayout.CENTER);
