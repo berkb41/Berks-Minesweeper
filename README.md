@@ -33,6 +33,8 @@ Otherwise, the opened cell displays either a number, indicating the number of mi
 ### Pre Requisites: Maven
 
 Suggested method for running tests is:
+> cd Berks-Minesweeper-Maven
+> 
 > mvn clean install
 
 By running this commands you can initially install Junit dependencies from Maven repo,
