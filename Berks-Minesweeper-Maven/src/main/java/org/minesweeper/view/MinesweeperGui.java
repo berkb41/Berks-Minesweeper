@@ -53,7 +53,7 @@ public class MinesweeperGui implements ActionListener {
 
         // Main pane with BorderLayout
         mainPane = new JPanel(new BorderLayout());
-        mainPane.setPreferredSize(new Dimension(900, 900));
+        mainPane.setPreferredSize(new Dimension(1200, 1200));
         mainPane.setBackground(Color.LIGHT_GRAY);
         mainPane.setOpaque(true);
         frame.getContentPane().add(mainPane, BorderLayout.CENTER);
