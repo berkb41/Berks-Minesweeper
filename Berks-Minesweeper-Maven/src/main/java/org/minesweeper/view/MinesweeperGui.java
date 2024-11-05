@@ -3,6 +3,7 @@ package org.minesweeper.view;
 
 
 import org.minesweeper.constant.GameConstant;
+import org.minesweeper.model.Board;
 import org.minesweeper.model.GamePlay;
 
 import javax.swing.*;
@@ -159,6 +160,7 @@ public class MinesweeperGui implements ActionListener {
 
     }
 
+    // Method that handles board click by distinguishing based on type of cell which is clicked
     private void handleBoardClick(int x_Axis, int y_Axis) {
 
         // Increasing move count to determine in case of game won
@@ -174,6 +176,9 @@ public class MinesweeperGui implements ActionListener {
         // If the cell is mine the integer value is -1 if anything else will be either just open it or put number of adjacent mines
         int boardValue = gamePlay.getCellValue(x_Axis,y_Axis);
 
+        // Move is marked on the revealed board as recursively rest will be revealed
+        gamePlay.makeMove(x_Axis,y_Axis);
+
         if (boardValue < 0) {
 
             gameButtons[x_Axis][y_Axis].setText("M");
@@ -187,7 +192,6 @@ public class MinesweeperGui implements ActionListener {
             JOptionPane.showMessageDialog(frame, "Game Over! You can start new game by clicking new game button.");
 
         } else if (boardValue == 0) {
-
             gameButtons[x_Axis][y_Axis].setEnabled(false);
 
         } else {
@@ -327,6 +331,47 @@ public class MinesweeperGui implements ActionListener {
 
     private void updateGameRoundLabel() {
         roundCounter.setText("Round: " + gamePlay.getRoundCount());
+    }
+
+    private void revealAdjacentCells(int x_Axis, int y_Axis) {
+
+        // If cell already has been revealed then no need
+        if (Board.cellCheckingStatusBoard[x_Axis][y_Axis]) {
+            return;
+        }
+
+        // if not cell will be revealed
+        Board.cellCheckingStatusBoard[x_Axis][x_Axis] = true;
+        gamePlay.increaseMoveCount();
+
+        // Get cell value
+        int cellValue = Board.gameBoard[x_Axis][y_Axis];
+
+        // Opening cell
+        gameButtons[x_Axis][y_Axis].setEnabled(false);
+        if (cellValue > 0) {
+            gameButtons[x_Axis][y_Axis].setText(String.valueOf(cellValue));
+        }
+
+        // If cell revealed cell is also empty process continues recursively
+        if (cellValue == 0) {
+            // Check all directions
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    int newX = x_Axis + dx;
+                    int newY = y_Axis + dy;
+
+                    // Board controls
+                    if (newX < 0 || newX >= gamePlay.getBoardSize() || newY < 0 || newY >= gamePlay.getBoardSize()) {
+                        continue;
+                    }
+
+                    // Recursively reveal adjacent cell
+                    revealAdjacentCells(newX, newY);
+                }
+            }
+        }
+
     }
 
 }
