@@ -70,3 +70,6 @@ And extending MineCell, EmptyCell and AdjacentCell which fits better into produc
 
 ### Refactoring
 If there would be more time, code could have been improved with better practices
+
+### Concurrency Support
+Maybe for that scale, can be overkill. However tasks in the game can be threaded and parallelized by implementing safe concurrency mechanisms to improve performance
