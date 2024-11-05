@@ -163,9 +163,6 @@ public class MinesweeperGui implements ActionListener {
     // Method that handles board click by distinguishing based on type of cell which is clicked
     private void handleBoardClick(int x_Axis, int y_Axis) {
 
-        // Increasing move count to determine in case of game won
-        gamePlay.increaseMoveCount();
-
 
         // Check whether game is going on
         if (!gamePlay.isGameGoing()) {
@@ -180,6 +177,9 @@ public class MinesweeperGui implements ActionListener {
         gamePlay.makeMove(x_Axis,y_Axis);
 
         if (boardValue < 0) {
+            // Increasing move count to determine in case of game won
+            gamePlay.increaseMoveCount();
+
 
             gameButtons[x_Axis][y_Axis].setText("M");
             gameButtons[x_Axis][y_Axis].setBackground(Color.ORANGE);
@@ -192,9 +192,11 @@ public class MinesweeperGui implements ActionListener {
             JOptionPane.showMessageDialog(frame, "Game Over! You can start new game by clicking new game button.");
 
         } else if (boardValue == 0) {
-            gameButtons[x_Axis][y_Axis].setEnabled(false);
-
+            revealAdjacentCells(x_Axis,y_Axis);
         } else {
+
+            // Increasing move count to determine in case of game won
+            gamePlay.increaseMoveCount();
 
             gameButtons[x_Axis][y_Axis].setText(String.valueOf(boardValue));
             gameButtons[x_Axis][y_Axis].setEnabled(false);
@@ -336,16 +338,16 @@ public class MinesweeperGui implements ActionListener {
     private void revealAdjacentCells(int x_Axis, int y_Axis) {
 
         // If cell already has been revealed then no need
-        if (Board.cellCheckingStatusBoard[x_Axis][y_Axis]) {
+        if (!gameButtons[x_Axis][y_Axis].isEnabled()) {
             return;
         }
 
         // if not cell will be revealed
-        Board.cellCheckingStatusBoard[x_Axis][x_Axis] = true;
         gamePlay.increaseMoveCount();
 
         // Get cell value
         int cellValue = Board.gameBoard[x_Axis][y_Axis];
+        System.out.println(cellValue);
 
         // Opening cell
         gameButtons[x_Axis][y_Axis].setEnabled(false);
