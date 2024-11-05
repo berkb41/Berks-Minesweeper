@@ -1,6 +1,6 @@
-package model;
+package org.minesweeper.model;
 
-import util.GamePlayUtil;
+import org.minesweeper.util.GamePlayUtil;
 
 import java.util.HashSet;
 

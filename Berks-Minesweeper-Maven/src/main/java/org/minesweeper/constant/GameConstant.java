@@ -1,4 +1,4 @@
-package constant;
+package org.minesweeper.constant;
 
 public class GameConstant {
     // Board size

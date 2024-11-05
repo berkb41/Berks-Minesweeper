@@ -1,4 +1,4 @@
-package model;
+package org.minesweeper.model;
 
 import java.util.Objects;
 

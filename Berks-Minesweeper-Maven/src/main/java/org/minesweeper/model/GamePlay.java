@@ -1,14 +1,14 @@
-package model;
+package org.minesweeper.model;
 
-import util.GamePlayUtil;
+import org.minesweeper.util.GamePlayUtil;
 
 public class GamePlay {
 
     final private Board gameBoard;
     private int gameCount;
-    private int size;
+    private final int size;
     private int moveCount;
-    private int totalMoveCount;
+    private final int totalMoveCount;
     private boolean isGameGoing;
 
     public GamePlay(final int selectedSize, final int mineCount) {

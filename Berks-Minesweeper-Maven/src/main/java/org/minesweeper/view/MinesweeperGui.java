@@ -1,7 +1,9 @@
-package view;
+package org.minesweeper.view;
 
-import constant.GameConstant;
-import model.GamePlay;
+
+
+import org.minesweeper.constant.GameConstant;
+import org.minesweeper.model.GamePlay;
 
 import javax.swing.*;
 import java.awt.*;

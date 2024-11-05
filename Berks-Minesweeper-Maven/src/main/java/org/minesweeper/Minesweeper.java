@@ -1,4 +1,6 @@
-import view.MinesweeperGui;
+package org.minesweeper;
+
+import org.minesweeper.view.MinesweeperGui;
 
 import javax.swing.*;
 

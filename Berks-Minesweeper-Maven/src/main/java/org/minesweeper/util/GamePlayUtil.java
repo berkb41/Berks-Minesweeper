@@ -1,7 +1,8 @@
-package util;
+package org.minesweeper.util;
 
-import model.Board;
-import model.Coordinate;
+
+import org.minesweeper.model.Board;
+import org.minesweeper.model.Coordinate;
 
 import java.util.HashSet;
 import java.util.Random;
