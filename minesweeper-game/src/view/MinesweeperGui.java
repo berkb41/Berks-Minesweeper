@@ -139,8 +139,12 @@ public class MinesweeperGui implements ActionListener {
         // check if new game requested
         else if (source == newGame) {
             // Restart the game with the same settings
+            // Changing status of game not finished
+            gamePlay.changeGameStatus();
+            // Increase round and move count for checking end condition
             gamePlay.increaseRoundCount();
             gamePlay.resetMoveCount();
+            // Resetting game board
             resetGameBoard();
         }
         // Handle board clicks based on CELL:X:Y convention
