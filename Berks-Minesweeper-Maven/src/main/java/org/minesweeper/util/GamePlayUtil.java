@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class GamePlayUtil {
 
+    /* Creating for mine coordinates at given amount randomized */
     public static HashSet<Coordinate> createMineCoordinates(int mineCount, int size) {
         Random rand = new Random();
         HashSet<Coordinate> mineCoordinates = new HashSet<>();
@@ -25,6 +26,7 @@ public class GamePlayUtil {
         return mineCoordinates;
     }
 
+    /* For assigning count value to each adjacent cell */
     public static int getAdjacentCount(Coordinate givenCell, int selectedSize) {
 
         int count = 0;

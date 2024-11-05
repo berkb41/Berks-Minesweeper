@@ -7,15 +7,12 @@ import java.util.HashSet;
 public class Board {
 
     public static int[][] gameBoard;
-    public static boolean[][] cellCheckingStatusBoard;
     private final HashSet<Coordinate> mineCells;
     private final int size;
-
 
     public Board(final int size, HashSet<Coordinate> mineCells) {
         this.size = size;
         gameBoard = new int[size][size];
-        cellCheckingStatusBoard = new boolean[size][size];
         this.mineCells = mineCells;
     }
 
@@ -32,7 +29,6 @@ public class Board {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 gameBoard[i][j] = gameBoard[i][j] != -1 ? GamePlayUtil.getAdjacentCount(new Coordinate(i,j), size) : -1;
-                cellCheckingStatusBoard[i][j] = false;
             }
         }
     }
