@@ -347,7 +347,6 @@ public class MinesweeperGui implements ActionListener {
 
         // Get cell value
         int cellValue = Board.gameBoard[x_Axis][y_Axis];
-        System.out.println(cellValue);
 
         // Opening cell
         gameButtons[x_Axis][y_Axis].setEnabled(false);
