@@ -15,6 +15,8 @@ Otherwise, the opened cell displays either a number, indicating the number of mi
 
 ## How To Run
 - **Pre-requisites**: Java Development Kit (JDK) / Ensure you have a compatible version of the Java Development Kit (JDK) installed on your system.
+- **Pre-requisites**: Maven / Ensure you have Maven installed, otherwise Maven load script cannot be executed (**For Intellij, once application cloned, it prompts shall it load Maven script on the bottom right side,
+  that has to be loaded first**)
 
 > git clone https://github.com/berkb41/Berks-Minesweeper
 >
