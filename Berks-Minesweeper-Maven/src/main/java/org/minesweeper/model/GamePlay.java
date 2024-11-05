@@ -65,6 +65,10 @@ public class GamePlay {
         return Board.gameBoard[x_Axis][y_Axis];
     }
 
+    public void makeMove(int x_Axis, int y_Axis) {
+        Board.cellCheckingStatusBoard[x_Axis][y_Axis] = true;
+    }
+
 
 
 }

@@ -19,14 +19,6 @@ public class Board {
         this.mineCells = mineCells;
     }
 
-    public HashSet<Coordinate> getMineCells() {
-        return  mineCells;
-    }
-
-    public int getSizeOfTheBoard() {
-        return size;
-    }
-
     public void initializeBoard() {
         placeMines();
         initializeBoards();
