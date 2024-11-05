@@ -23,6 +23,11 @@ Otherwise, the opened cell displays either a number, indicating the number of mi
 > java org.minesweeper.Minesweeper
 
 - **From Intellij or any other Java IDE**: Run Minesweeper.java Run as a class with any JDK supports Java 11+
+- **Using Docker**: You can also run the code via Docker if you follow those simple steps, but first ensure Docker Engine installed
+> docker build -t minesweeper .
+> 
+> docker run -it minesweeper
+
 
 ## Advanced Parts
 ### Enhanced Adjacent Reveal:
@@ -36,6 +41,9 @@ Mines are in the fixed location
 
 ### HashSet usage shortened application code & checks
 Since set is only contatining unique values, usage of hashset made code block shorter.
+
+### Dockerization Support
+By using technology like Docker, you can easily set your running environment and deploy the application to the cloud
 
 ## Things Can Be Improved
 
