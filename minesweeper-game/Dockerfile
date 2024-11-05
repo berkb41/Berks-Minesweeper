@@ -7,12 +7,14 @@ RUN apt-get update && apt-get install -y \
     libxi6 \
     && rm -rf /var/lib/apt/lists/*
 
+# Set the working directory in the container
 WORKDIR /app
 
-COPY . /app
+# Copy the source files to the working directory
+COPY src/ src/
 
-RUN mkdir -p out && \
-    javac -d out src/**/*.java
+# Compile the Java code
+RUN javac src/Minesweeper.java -d out
 
 ENV DISPLAY=:0
 
