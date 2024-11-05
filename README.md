@@ -13,7 +13,7 @@ Otherwise, the opened cell displays either a number, indicating the number of mi
 - **Java**: The core programming language used for the game logic and implementation.
 - **Swing**: The Java GUI toolkit used for building the graphical user interface.
 
-## How to Run
+## How To Run
 - **Pre-requisites**: Java Development Kit (JDK) / Ensure you have a compatible version of the Java Development Kit (JDK) installed on your system.
 
 > git clone https://github.com/berkb41/Berks-Minesweeper
@@ -28,9 +28,20 @@ Otherwise, the opened cell displays either a number, indicating the number of mi
 > 
 > docker run -it minesweeper
 
+## How To Run Tests
+
+### Pre Requisites: Maven
+
+Suggested method for running tests is:
+> mvn clean install
+
+By running this commands you can initially install Junit dependencies from Maven repo,
+After installing Junit, tests are automatically executed.
+To see tests src/main/tests folder can be visited
+(Test coverage is exceptionally low for a production application but due to time limitations main parts are covered)
 
 ## Advanced Parts
-### Enhanced Adjacent Reveal:
+### Enhanced adjacent reveal:
 Although not stated in the requirements, enhanced adjacent reveal algorithm added to help if empty cell clicked it also reveals other empty cells and adjacent cells next to mines
 
 ### Three levels of game
@@ -42,8 +53,11 @@ Mines are in the fixed location
 ### HashSet usage shortened application code & checks
 Since set is only contatining unique values, usage of hashset made code block shorter.
 
-### Dockerization Support
+### Dockerization support
 By using technology like Docker, you can easily set your running environment and deploy the application to the cloud
+
+### Tests are included
+Although coverage is low (Below Section for Details) there are unit tests which lay out the foundation, by having more time, production level coverage can be included.
 
 ## Things Can Be Improved
 
